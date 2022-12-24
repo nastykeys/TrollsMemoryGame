@@ -74,11 +74,16 @@ const cardArray = [
 
 
 //concat array  number of level times and randomize srt
-grid = document.querySelector("#grid")
-resultDisplay = document.querySelector("#result")
+const grid = document.querySelector("#grid"),
+resultDisplay = document.querySelector("#result"),
+time = document.querySelector("#time")
+
+let currentTime = 200
 cardsChosen =[]
 chosenIds = []
 cardsWon = []
+let timer = setInterval(countDown, 1000)
+
 class MemoryGame {
     constructor(cards, speed, result){
         this.cards = cards.sort(() => Math.floor(0.5 - Math.random()))
@@ -151,7 +156,15 @@ class MemoryGame {
     }
 }
 
+function countDown(){
+    if(currentTime == 0){
+        clearInterval(timer)
+        alert(`Time's up! your score is ${result}`)
+        setTimeout(window.location.reload(), 2000)
+    }
+    currentTime--
+    time.textContent = currentTime
+}
 
 const runGame = new MemoryGame(cardArray, 6000, 0)
-
 runGame.run()
